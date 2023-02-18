@@ -77,7 +77,7 @@ MessageBox.Show(Translations.WindowTitle);
 `
 
 #### IDisposable
-The Translator and Translation object both implement IDisposable so be sure to clean up your resources.
+The Translator and Translation objects both implement IDisposable so be sure to clean up your resources.
 
 ### Test / Demo Application
 In the repo you'll see a project that shows how to setup the API for use. This is not the only way the API can be utilized. This API can just as easily be used in an MVVM setup. Just put the Translation object on your view model and bind to the properties. That easy.
