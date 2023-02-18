@@ -1,5 +1,5 @@
 # WPF.Translations
-An API that provides translations to a WPF application without the need to restart. Provides bindable language strings.
+An API that provides translations to a WPF application without the need to restart. Provides bindable language strings that can be used in XAML but has the robustness to be used in C# code as well. One stop shopping for translations.
 
 ## The Missing Link
 If you have ever used Qt before with QT Linguist then you know how awesome and easy translations can be in a Qt development environment. These translations can be updated in real time without the need to restart the application. Why doesn't something like WPF have this type of functionality built into it? Seems like a mature framework would have a modern day solution to this problem. A solution that is capable of providing bindable translated strings as well as strings that can be used in code? It's 2023 (when I designed this) and I would expect something like this to be built into newer versions of .NET. I am not aware of any direct support for such a thing.
