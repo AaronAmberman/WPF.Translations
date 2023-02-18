@@ -11,3 +11,51 @@ There are even cool articles and GitHub samples/examples that show how to use a 
 
 ## Enter WPF.Translations
 This API *provides translations* that can be **bound to for the front-end** and can be **called from code in the back-end** as well. Finally about time WPF gets an API capable of providing what I would consider a modern enterprise level translation mechanism. I just had to write it myself, but now I will share it with the world.
+
+### At a Glance
+The API itself is rather small and does not have anything to do with directly controlling access to XAML or C#. That is up to you but we'll go over how to very easily achieve this. This API is capable of reading strings from a XAML ResourceDictionary or a RESX resource file. It is up to you to use appropriate translation data provider or even use your own in case you have a non-standard translation data source. Why should you be forced to a type a file for translations? You shouldn't! Hence why I made it possible to define your own translation data interpreter. More on that later.
+
+#### ITranslationProvider<T>
+This type defines what a translator object must look like. A translator is basically a collection of trnaslations and a key contract translation.
+
+##### KeyContract
+Simply put a key contract is a matching collection of keys. Same in count and key names exactly! The API will throw an error if incoming translation data does not match the key contract.
+
+##### CurrentTranslations
+A place holder for active translation object so that if may be easily referenced.
+
+#### Translator
+A default implementation to manage a collection of translations. Custom translators can be built using the interface aforementioned. Add translations to the translator via the methods ***AddResourceDictionaryForTranslation*** or ***AddResourceDictionariesForTranslation***.
+
+#### Translation
+***The magic class of the API***. The core idea here is that this object is a [DynamicObject](https://learn.microsoft.com/en-us/dotnet/api/system.dynamic.dynamicobject?view=net-7.0) so that it can have dynamic properties set on it. This is how I build the generic translation object that could have any key. 
+
+##### Member Enforcement
+The translation object while being a DynamicObject does not allow for additional dynamic properties or methods to be added to it. Member creation is locked down and translation objects are immutable. That being said, the translation strings themselves are mutable...they need to be! This way they can automatic update the UI when bound to. So don't try to add new properties or methods to it.
+
+###### Warning
+Make sure you type your key names correctly or this will generate an exception at runtime. There is no auto-complete for member declarations because it is a dynamic object. Well, that is not entirely true.
+
+If the developer types it out as a Translator then you won't have access to the keys directly as properties (you will have to access them through methods and you don't want to do that).
+
+`Translator translator = new Translator(...);`
+
+Don't do that though. It is a dynamic object so treat it as such.
+
+`dynamic translator = new Translator(...);`
+
+This is how .NET works with dynamic objects. This is not a dynamic object tutorial so if you are unfamiliar please google it and read up on it.
+
+Back to the point, if you write it the top way you will NOT have access to all the properties as properties. You won't be able to type `MainWindow.Title = Translation.MainWindowTitle` (or whatever your property name is). You'd have to type `string value = Translator.GetTranslation` and again you don't want to have to do that.
+
+##### NotifyPropertyChanged
+Even though the Translation object is dynamic it implements INotifyPropertyChanged to be able to broadcast changes made. This allows it to update the UI.
+
+##### TranslationDataProvider
+This property holds an object that reads the translation data source and formulates the collection of key value pairs that make up translations.
+
+#### ResourceDictionaryTranslationDataProvider
+This type allows translations to be read from a XAML ResourceDictionary.
+
+#### ResxResourceFileTranslationDataProvider
+This type allows translation to be read from RESX resource files.
