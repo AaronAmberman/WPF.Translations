@@ -25,7 +25,7 @@ Simply put a key contract is a matching collection of keys. Same in count and ke
 A place holder for active translation object so that if may be easily referenced.
 
 #### Translator
-A default implementation to manage a collection of translations. Custom translators can be built using the interface aforementioned. Add translations to the translator via the methods ***AddResourceDictionaryForTranslation*** or ***AddResourceDictionariesForTranslation***.
+A default implementation to manage a collection of translations. Custom translators can be built using the interface aforementioned. Add translations to the translator via the methods ***AddResourceForTranslation*** or ***AddResourcesForTranslation***.
 
 #### Translation
 ***The magic class of the API***. The core idea here is that this object is a [DynamicObject](https://learn.microsoft.com/en-us/dotnet/api/system.dynamic.dynamicobject?view=net-7.0) so that it can have dynamic properties set on it. This is how I build the generic translation object that could have any key. 
