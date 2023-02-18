@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Windows;
@@ -30,29 +31,42 @@ namespace Testing
                     Source = new Uri("pack://application:,,,/Languages/Language.en.xaml")
                 }
             };
-            translator.AddResourceDictionariesForTranslation(new List<Tuple<string, ResourceDictionary>>
+
+            try
             {
-                new Tuple<string, ResourceDictionary>("en",  new ResourceDictionary
+                translator.AddResourceDictionariesForTranslation(new List<Tuple<string, ResourceDictionary>>
                 {
-                    Source = new Uri("pack://application:,,,/Languages/Language.en.xaml")
-                }),
-                new Tuple<string, ResourceDictionary>("fr",  new ResourceDictionary
-                {
-                    Source = new Uri("pack://application:,,,/Languages/Language.fr.xaml")
-                }),
-                new Tuple<string, ResourceDictionary>("it",  new ResourceDictionary
-                {
-                    Source = new Uri("pack://application:,,,/Languages/Language.it.xaml")
-                }),
-                new Tuple<string, ResourceDictionary>("ru",  new ResourceDictionary
-                {
-                    Source = new Uri("pack://application:,,,/Languages/Language.ru.xaml")
-                }),
-                new Tuple<string, ResourceDictionary>("zh-Hans",  new ResourceDictionary
-                {
-                    Source = new Uri("pack://application:,,,/Languages/Language.zh-Hans.xaml")
-                }),
-            });
+                    new Tuple<string, ResourceDictionary>("en",  new ResourceDictionary
+                    {
+                        Source = new Uri("pack://application:,,,/Languages/Language.en.xaml")
+                    }),
+                    new Tuple<string, ResourceDictionary>("fr",  new ResourceDictionary
+                    {
+                        Source = new Uri("pack://application:,,,/Languages/Language.fr.xaml")
+                    }),
+                    new Tuple<string, ResourceDictionary>("it",  new ResourceDictionary
+                    {
+                        Source = new Uri("pack://application:,,,/Languages/Language.it.xaml")
+                    }),
+                    new Tuple<string, ResourceDictionary>("ru",  new ResourceDictionary
+                    {
+                        Source = new Uri("pack://application:,,,/Languages/Language.ru.xaml")
+                    }),
+                    new Tuple<string, ResourceDictionary>("zh-Hans",  new ResourceDictionary
+                    {
+                        Source = new Uri("pack://application:,,,/Languages/Language.zh-Hans.xaml")
+                    }),
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"An error occurred.{Environment.NewLine}{ex}");
+
+                MessageBox.Show("The application could not properly load translations. Exiting application.", "Translation Load Error");
+
+                Environment.Exit(-1);
+                return;
+            }
 
             // set the culture on startup to what is selected in settings
             Thread.CurrentThread.CurrentCulture = new CultureInfo(Testing.Properties.Settings.Default.Culture);
