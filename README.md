@@ -97,3 +97,6 @@ Translatable strings that can be bound in XAML or used in C# without the need to
 
 ## One Final Note
 In the demo application I am using pack application strings because my ResourceDictionaries are set to "Resource" under properties.
+
+# Example
+If you want to see a real application example then check out my [VTOL VR Mission Assistant](https://github.com/AaronAmberman/VTOLVR-MissionAssistant).
