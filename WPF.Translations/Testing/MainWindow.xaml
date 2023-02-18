@@ -1,0 +1,28 @@
+﻿<Window x:Class="Testing.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Testing"
+        mc:Ignorable="d"
+        Height="450" Width="800" WindowStartupLocation="CenterScreen"
+        Title="{Binding RelativeSource={RelativeSource Self}, Path=Translations.WindowTitle, FallbackValue=Testing Application}"
+        Loaded="Window_Loaded">
+    <Grid>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Top" Margin="0,0,5,0" Padding="0,2,0,0"
+                       Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}, Path=Translations.Language, FallbackValue=Language}" />
+            <ComboBox x:Name="comboBox" Grid.Column="1" VerticalAlignment="Top" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="English" />
+                <ComboBoxItem Content="français" />
+                <ComboBoxItem Content="italiano" />
+                <ComboBoxItem Content="Русский" />
+                <ComboBoxItem Content="中文" />
+            </ComboBox>
+        </Grid>
+    </Grid>
+</Window>
