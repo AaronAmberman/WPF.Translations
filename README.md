@@ -82,3 +82,8 @@ In the repo you'll see a project that shows how to setup the API for use. This i
 Just remember that wherever you decide to make the reference to the translation make it dynamic not of type Translation.
 
 ![image](https://user-images.githubusercontent.com/23512394/219885446-95ded394-c02e-43b1-90e2-e27ab4035851.png)
+
+### In Action
+![Translations](https://user-images.githubusercontent.com/23512394/219886361-42a99bee-cd6e-4d3e-bcdd-ef0cee049248.gif)
+
+Simple and effective! Check out the demo app.
