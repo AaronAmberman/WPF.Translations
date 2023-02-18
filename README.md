@@ -40,11 +40,11 @@ Make sure you type your key names correctly or this will generate an exception a
 
 If the developer types it out as a Translator then you won't have access to the keys directly as properties (you will have to access them through methods and you don't want to do that).
 
-`Translator translator = new Translator(...);`
+`Translation translation = new Translation(...);`
 
 Don't do that though. It is a dynamic object so treat it as such.
 
-`dynamic translator = new Translator(...);`
+`dynamic translation = new Translation(...);`
 
 This is how .NET works with dynamic objects. This is not a dynamic object tutorial so if you are unfamiliar please google it and read up on it.
 
