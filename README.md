@@ -88,4 +88,6 @@ Just remember that wherever you decide to make the reference to the translation 
 
 Simple and effective! Check out the demo app.
 
-Hopefully this makes some other developer's life easier as it has made mine easier. Binding in XAML to translated strings? Yes please! Enjoy!
+Hopefully this makes some other developer's life easier as it has made mine easier. 
+
+Translatable strings that can be bound in XAML or used in C# without the need to restart the application? Yes please! Enjoy!
