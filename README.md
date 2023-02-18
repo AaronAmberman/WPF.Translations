@@ -46,7 +46,7 @@ Don't do that though. It is a dynamic object so treat it as such.
 
 This is how .NET works with dynamic objects. This is not a dynamic object tutorial so if you are unfamiliar please google it and read up on it.
 
-Back to the point, if you write it the top way you will NOT have access to all the properties as properties. You won't be able to type `MainWindow.Title = Translation.MainWindowTitle` (or whatever your property name is). You'd have to type `string value = Translator.GetTranslation` and again you don't want to have to do that.
+Back to the point, if you write it the top way you will NOT have access to all the properties as properties. You won't be able to type `MainWindow.Title = Translation.MainWindowTitle` (or whatever your property name is). You'd have to type `string value = Translator.GetTranslation("MainWindowTitle")` and again you don't want to have to do that.
 
 ##### NotifyPropertyChanged
 Even though the Translation object is dynamic it implements INotifyPropertyChanged to be able to broadcast changes made. This allows it to update the UI.
