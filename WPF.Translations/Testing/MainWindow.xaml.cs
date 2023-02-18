@@ -16,6 +16,11 @@ namespace Testing
 
         #region Properties
 
+        /*
+         * The magic happens because the translations object is dynamic. However, the underlying type is
+         * Translation which does not allow for random property addition.
+         */
+
         public dynamic Translations
         {
             get { return (dynamic)GetValue(TranslationsProperty); }
@@ -69,6 +74,11 @@ namespace Testing
             }
 
             isLoading = false;
+
+            // this will throw an exception because our type does not allow for dynamic properties to be added
+            // translations are tied to the resource dictionaries used to generate them (this is enforced)
+            // NOTE: keep this in my when using in XAML
+            //Translations.MyNewProperty = "Does this work?";
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

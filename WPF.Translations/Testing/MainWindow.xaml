@@ -8,12 +8,21 @@
         Height="450" Width="800" WindowStartupLocation="CenterScreen"
         Title="{Binding RelativeSource={RelativeSource Self}, Path=Translations.WindowTitle, FallbackValue=Testing Application}"
         Loaded="Window_Loaded">
+    <!-- 
+        Notice we can bind to our Translation object (look at the Title property). However, if we did not provide a Fallback value our design interface would be
+        blank because the translations are generated at run time. So as to not leave our designer blank...provide a Fallback value.
+    -->
     <Grid>
         <Grid Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
+            <!-- 
+                In this demo app I decided to just make a DependencyProperty on the MainWindow but you can also set a Translation on a view model object in a MVVM
+                setup and just bind to ViewModel.Translation.WhateverTheNameOfYourStringIs. Here as well, you would want to provide a Fallback value so that the UI 
+                is not blank.
+            -->
             <TextBlock Grid.Column="0" VerticalAlignment="Top" Margin="0,0,5,0" Padding="0,2,0,0"
                        Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}, Path=Translations.Language, FallbackValue=Language}" />
             <ComboBox x:Name="comboBox" Grid.Column="1" VerticalAlignment="Top" SelectionChanged="ComboBox_SelectionChanged">
