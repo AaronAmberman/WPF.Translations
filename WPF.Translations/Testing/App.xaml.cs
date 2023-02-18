@@ -44,7 +44,7 @@ namespace Testing
             // add all the translation dictionaries
             try
             {
-                translator.AddResourceDictionariesForTranslation(new List<Tuple<string, ResourceDictionary>>
+                translator.AddResourcesForTranslation(new List<Tuple<string, ResourceDictionary>>
                 {
                     new Tuple<string, ResourceDictionary>("en",  new ResourceDictionary
                     {

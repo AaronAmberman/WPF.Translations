@@ -65,7 +65,7 @@ namespace WPF.Translations
         /// <exception cref="ArgumentNullException">resourceDictionary is null..</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: key count mistmatch.</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: missing keys.</exception>
-        public bool AddResourceDictionaryForTranslation(string culture, T resource)
+        public bool AddResourceForTranslation(string culture, T resource)
         {
             if (KeyContract == null)
                 throw new InvalidOperationException("The KeyContract must be set before adding any resource dictionaries.");
@@ -116,11 +116,11 @@ namespace WPF.Translations
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: key count mistmatch.</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: missing keys.</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: extra keys.</exception>
-        public void AddResourceDictionariesForTranslation(IEnumerable<Tuple<string, T>> translations)
+        public void AddResourcesForTranslation(IEnumerable<Tuple<string, T>> translations)
         {
             foreach (Tuple<string, T> translation in translations)
             {
-                AddResourceDictionaryForTranslation(translation.Item1, translation.Item2);
+                AddResourceForTranslation(translation.Item1, translation.Item2);
             }
         }
 
