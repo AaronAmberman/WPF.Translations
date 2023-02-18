@@ -33,6 +33,8 @@ A default implementation to manage a collection of translations. Custom translat
 ##### Member Enforcement
 The translation object while being a DynamicObject does not allow for additional dynamic properties or methods to be added to it. Member creation is locked down and translation objects are immutable. That being said, the translation strings themselves are mutable...they need to be! This way they can automatically update the UI when bound to. So don't try to add new properties or methods to it.
 
+![image](https://user-images.githubusercontent.com/23512394/219885134-f07b1f8b-3b85-4083-99e2-e1f0e961972f.png)
+
 ###### Warning
 Make sure you type your key names correctly or this will generate an exception at runtime. There is no auto-complete for member declarations because it is a dynamic object. Well, that is not entirely true.
 
@@ -59,3 +61,20 @@ This type allows translations to be read from a XAML ResourceDictionary.
 
 #### ResxResourceFileTranslationDataProvider
 This type allows translation to be read from RESX resource files.
+
+## Usage
+Using the API to get translated strings is super simple.
+
+### XAML example
+`
+Title="{Binding RelativeSource={RelativeSource Self}, Path=Translations.WindowTitle, FallbackValue=Testing Application}"
+`
+Here I am binding to a Translation object and looking for a property called **WindowTitle**. Notice the *FallbackValue* in the binding! ***This is because translations are a runtime thing not a design time thing.*** So if you want to be able to see something in the designer simply enter a *FallbackValue*.
+
+### C#
+`
+MessageBox.Show(Translations.WindowTitle);
+`
+
+### Test / Demo Application
+In the repo you'll see a project that shows how to setup the API for use. This is not the only way the API can be utilized. This API can just as easily be used in an MVVM setup. Just put the Translation object on your view model and bind to the properties. That easy.
