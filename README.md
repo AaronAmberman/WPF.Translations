@@ -31,7 +31,7 @@ A default implementation to manage a collection of translations. Custom translat
 ***The magic class of the API***. The core idea here is that this object is a [DynamicObject](https://learn.microsoft.com/en-us/dotnet/api/system.dynamic.dynamicobject?view=net-7.0) so that it can have dynamic properties set on it. This is how I build the generic translation object that could have any key. 
 
 ##### Member Enforcement
-The translation object while being a DynamicObject does not allow for additional dynamic properties or methods to be added to it. Member creation is locked down and translation objects are immutable. That being said, the translation strings themselves are mutable...they need to be! This way they can automatic update the UI when bound to. So don't try to add new properties or methods to it.
+The translation object while being a DynamicObject does not allow for additional dynamic properties or methods to be added to it. Member creation is locked down and translation objects are immutable. That being said, the translation strings themselves are mutable...they need to be! This way they can automatically update the UI when bound to. So don't try to add new properties or methods to it.
 
 ###### Warning
 Make sure you type your key names correctly or this will generate an exception at runtime. There is no auto-complete for member declarations because it is a dynamic object. Well, that is not entirely true.
