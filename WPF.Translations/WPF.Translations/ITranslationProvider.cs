@@ -9,7 +9,7 @@ namespace WPF.Translations
         #region Properties
 
         /// <summary>Gets or sets the translations currently in use.</summary>
-        Translation CurrentTranslations { get; set; }
+        dynamic CurrentTranslations { get; set; }
 
         /// <summary>Gets or sets the resource dictionary to use as the key enforcement.</summary>
         /// <remarks>

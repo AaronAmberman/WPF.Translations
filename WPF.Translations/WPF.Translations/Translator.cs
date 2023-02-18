@@ -17,7 +17,7 @@ namespace WPF.Translations
         #region Properties
 
         /// <summary>Gets or sets the translations currently in use.</summary>
-        public Translation CurrentTranslations { get; set; }
+        public dynamic CurrentTranslations { get; set; }
 
         /// <summary>Gets or sets the translation to use as the key enforcement contract.</summary>
         /// <remarks>
