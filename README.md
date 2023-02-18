@@ -87,3 +87,5 @@ Just remember that wherever you decide to make the reference to the translation 
 ![Translations](https://user-images.githubusercontent.com/23512394/219886361-42a99bee-cd6e-4d3e-bcdd-ef0cee049248.gif)
 
 Simple and effective! Check out the demo app.
+
+Hopefully this makes some other developer's life easier as it has made mine easier. Binding in XAML to translated strings? Yes please! Enjoy!
