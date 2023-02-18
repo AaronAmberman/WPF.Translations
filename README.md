@@ -33,7 +33,7 @@ A default implementation to manage a collection of translations. Custom translat
 ##### Member Enforcement
 The translation object while being a DynamicObject does not allow for additional dynamic properties or methods to be added to it. Member creation is locked down and translation objects are immutable. That being said, the translation strings themselves are mutable...they need to be! This way they can automatically update the UI when bound to. So don't try to add new properties or methods to it.
 
-![image](https://user-images.githubusercontent.com/23512394/219885134-f07b1f8b-3b85-4083-99e2-e1f0e961972f.png)
+![image](https://user-images.githubusercontent.com/23512394/219885295-ac427b0d-d77c-4ea5-b0dc-14d3c2003eb8.png)
 
 ###### Warning
 Make sure you type your key names correctly or this will generate an exception at runtime. There is no auto-complete for member declarations because it is a dynamic object. Well, that is not entirely true.
