@@ -16,7 +16,7 @@ This API *provides translations* that can be **bound to for the front-end** and 
 The API itself is rather small and does not have anything to do with directly controlling access to XAML or C#. That is up to you but we'll go over how to very easily achieve this. This API is capable of reading strings from a XAML ResourceDictionary or a RESX resource file. It is up to you to use appropriate translation data provider or even use your own in case you have a non-standard translation data source. Why should you be forced to a type a file for translations? You shouldn't! Hence why I made it possible to define your own translation data interpreter. More on that later.
 
 #### ITranslationProvider<T>
-This type defines what a translator object must look like. A translator is basically a collection of trnaslations and a key contract translation.
+This type defines what a translator object must look like. A translator is basically a collection of translations and a key contract translation.
 
 ##### KeyContract
 Simply put a key contract is a matching collection of keys. Same in count and key names exactly! The API will throw an error if incoming translation data does not match the key contract.
