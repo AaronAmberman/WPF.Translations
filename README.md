@@ -78,3 +78,7 @@ MessageBox.Show(Translations.WindowTitle);
 
 ### Test / Demo Application
 In the repo you'll see a project that shows how to setup the API for use. This is not the only way the API can be utilized. This API can just as easily be used in an MVVM setup. Just put the Translation object on your view model and bind to the properties. That easy.
+
+Just remember that wherever you decide to make the reference to the translation make it dynamic not of type Translation.
+
+![image](https://user-images.githubusercontent.com/23512394/219885446-95ded394-c02e-43b1-90e2-e27ab4035851.png)
