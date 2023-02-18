@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
 
 namespace WPF.Translations
 {
     /// <summary>Describes an object that will provide and manage translations objects.</summary>
-    public interface ITranslationProvider
+    public interface ITranslationProvider<T>
     {
         #region Properties
 
         /// <summary>Gets or sets the translations currently in use.</summary>
-        dynamic CurrentTranslations { get; set; }
+        Translation CurrentTranslations { get; set; }
 
         /// <summary>Gets or sets the resource dictionary to use as the key enforcement.</summary>
         /// <remarks>
@@ -23,7 +22,12 @@ namespace WPF.Translations
         /// or an error will be thrown.
         /// </para>
         /// </remarks>
-        ResourceDictionary KeyContract { get; set; }
+        Translation KeyContract { get; set; }
+
+        /// <summary>
+        /// Gets or sets the translation data provider (the component that will read the resource and construct a dictionary of translations).
+        /// </summary>
+        ITranslationDataProvider TranslationDataProvider { get; set; }
 
         /// <summary>Gets the collection of translations.</summary>
         IReadOnlyDictionary<string, Translation> Translations { get; }
@@ -41,7 +45,7 @@ namespace WPF.Translations
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: key count mistmatch.</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: missing keys.</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: extra keys.</exception>
-        bool AddResourceDictionaryForTranslation(string culture, ResourceDictionary resourceDictionary);
+        bool AddResourceDictionaryForTranslation(string culture, T resourceDictionary);
 
         /// <summary>Adds a collection of resource dictionaries to the list of translations.</summary>
         /// <param name="translations">The collections of translations to add.</param>
@@ -51,7 +55,7 @@ namespace WPF.Translations
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: key count mistmatch.</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: missing keys.</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: extra keys.</exception>
-        void AddResourceDictionariesForTranslation(IEnumerable<Tuple<string, ResourceDictionary>> translations);
+        void AddResourceDictionariesForTranslation(IEnumerable<Tuple<string, T>> translations);
 
         /// <summary>Clears the current collection of translations.</summary>
         void ClearTranslations();

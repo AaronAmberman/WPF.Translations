@@ -3,4 +3,6 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="Language">语言</system:String>
     <system:String x:Key="WindowTitle">测试应用</system:String>
+    <system:String x:Key="Error">错误</system:String>
+    <system:String x:Key="ErrorMessage">应用程序中存在某种错误。做一点事。</system:String>
 </ResourceDictionary>

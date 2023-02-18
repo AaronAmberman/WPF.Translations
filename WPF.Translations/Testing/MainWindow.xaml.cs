@@ -75,8 +75,8 @@ namespace Testing
 
             isLoading = false;
 
-            // this will throw an exception because our type does not allow for dynamic properties to be added
-            // translations are tied to the resource dictionaries used to generate them (this is enforced)
+            // This will throw an exception because our type does not allow for dynamic properties to be added.
+            // Translations are tied to the resource dictionaries used to generate them (this is enforced).
             // NOTE: keep this in my when using in XAML
             //Translations.MyNewProperty = "Does this work?";
         }
@@ -117,6 +117,11 @@ namespace Testing
             App.Translator.CurrentTranslations = App.Translator.Translations[Testing.Properties.Settings.Default.Culture];
 
             Translations = App.Translator.CurrentTranslations;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(Translations.ErrorMessage);
         }
 
         #endregion

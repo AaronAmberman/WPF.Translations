@@ -3,4 +3,6 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="Language">Язык</system:String>
     <system:String x:Key="WindowTitle">Приложение для тестирования</system:String>
+    <system:String x:Key="Error">Ошибка</system:String>
+    <system:String x:Key="ErrorMessage">Произошла какая-то ошибка в приложении. Сделай что-нибудь.</system:String>
 </ResourceDictionary>
