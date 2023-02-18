@@ -78,6 +78,9 @@ namespace WPF.Translations
             {
                 disposable.Dispose();
             }
+
+            translations.Clear();
+            translations = null;
         }
 
         /// <summary>Attempts to get a property by key.</summary>
