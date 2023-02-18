@@ -9,7 +9,7 @@ namespace WPF.Translations
     /// A translation class that is capable of providing bindable property language strings dynamically generated from a resource dictionary. 
     /// This class cannot be inherited.
     /// </summary>
-    public sealed class Translation : DynamicObject, INotifyPropertyChanged
+    public sealed class Translation : DynamicObject, INotifyPropertyChanged, IDisposable
     {
         #region Fields
 
@@ -69,6 +69,17 @@ namespace WPF.Translations
         #endregion
 
         #region Methods
+
+        /// <summary>Releases resources used by the Translation object.</summary>
+        public void Dispose()
+        {
+            // not every data provider type will be disposable but if they are, Dispose of them
+            if (resources is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+        }
+
         /// <summary>Attempts to get a property by key.</summary>
         /// <param name="key">The key to look for.</param>
         /// <returns>The value associated to the key.</returns>

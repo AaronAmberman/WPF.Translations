@@ -30,9 +30,6 @@ namespace WPF.Translations
                 }
             }
 
-            rr.Close();
-            rr.Dispose();
-
             return keys;
         }
 
@@ -59,9 +56,6 @@ namespace WPF.Translations
                     keyValuePairs.Add(key, value);
                 }
             }
-
-            rr.Close();
-            rr.Dispose();
 
             return keyValuePairs;
         }

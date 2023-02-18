@@ -90,5 +90,10 @@ namespace Testing
 
             Translator = translator;
         }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            Translator.Dispose();
+        }
     }
 }

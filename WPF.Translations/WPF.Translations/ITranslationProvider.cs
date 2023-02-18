@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace WPF.Translations
 {
     /// <summary>Describes an object that will provide and manage translations objects.</summary>
-    public interface ITranslationProvider<T>
+    public interface ITranslationProvider<T> : IDisposable
     {
         #region Properties
 

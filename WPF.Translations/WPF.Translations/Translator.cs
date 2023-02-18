@@ -132,6 +132,22 @@ namespace WPF.Translations
             translations.Clear();
         }
 
+        /// <summary>Releases resources used by the Translation objects.</summary>
+        public void Dispose()
+        {
+            foreach (KeyValuePair<string, Translation> kvp in Translations)
+            {
+                kvp.Value.Dispose();
+            }
+
+            Translations = null;
+            
+            translations.Clear();
+            translations = null;
+
+            TranslationDataProvider = null;
+        }
+
         #endregion
     }
 }
