@@ -77,7 +77,7 @@ namespace Testing
 
             // This will throw an exception because our type does not allow for dynamic properties to be added.
             // Translations are tied to the resource dictionaries used to generate them (this is enforced).
-            // NOTE: keep this in my when using in XAML
+            // NOTE: keep this in mind when using in XAML
             //Translations.MyNewProperty = "Does this work?";
         }
 
