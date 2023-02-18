@@ -5,8 +5,11 @@ using System.Dynamic;
 
 namespace WPF.Translations
 {
-    /// <summary>A translation class that is capable of providing bindable property language strings dynamically generated from a resource dictionary.</summary>
-    public class Translation : DynamicObject, INotifyPropertyChanged
+    /// <summary>
+    /// A translation class that is capable of providing bindable property language strings dynamically generated from a resource dictionary. 
+    /// This class cannot be inherited.
+    /// </summary>
+    public sealed class Translation : DynamicObject, INotifyPropertyChanged
     {
         #region Fields
 
