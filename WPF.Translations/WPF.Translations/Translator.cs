@@ -140,6 +140,7 @@ namespace WPF.Translations
                 kvp.Value.Dispose();
             }
 
+            CurrentTranslations = null;
             Translations = null;
             
             translations.Clear();
