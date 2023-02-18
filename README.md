@@ -38,7 +38,7 @@ The translation object while being a DynamicObject does not allow for additional
 ###### Warning
 Make sure you type your key names correctly or this will generate an exception at runtime. There is no auto-complete for member declarations because it is a dynamic object. Well, that is not entirely true.
 
-If the developer types it out as a Translator then you won't have access to the keys directly as properties (you will have to access them through methods and you don't want to do that).
+If the developer types it out as a Translation then you won't have access to the keys directly as properties (you will have to access them through methods and you don't want to do that).
 
 `Translation translation = new Translation(...);`
 
