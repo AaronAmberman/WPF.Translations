@@ -36,7 +36,11 @@ The translation object while being a DynamicObject does not allow for additional
 ![image](https://user-images.githubusercontent.com/23512394/219885295-ac427b0d-d77c-4ea5-b0dc-14d3c2003eb8.png)
 
 ###### Warning
-Make sure you type your key names correctly or this will generate an exception at runtime. There is no auto-complete for member declarations because it is a dynamic object. Well, that is not entirely true.
+Make sure you type your key names correctly or this will generate an exception at runtime. 
+![image](https://user-images.githubusercontent.com/23512394/219955646-f16a7432-bdcd-444e-a2df-0856abfc6fa7.png)
+XAML binding error to a property that doesn't exist.
+
+There is no auto-complete for member declarations because it is a dynamic object. Well, that is not entirely true.
 
 If the developer types it out as a Translation then you won't have access to the keys directly as properties (you will have to access them through methods and you don't want to do that).
 
