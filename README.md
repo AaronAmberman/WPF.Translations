@@ -67,7 +67,7 @@ Back to the point, if you write it the top way you will NOT have access to all t
 Even though the Translation object is dynamic it implements INotifyPropertyChanged to be able to broadcast changes made. This allows it to update the UI.
 
 #### ITranslationDataProvider
-Describes an object that is responsible for interpreting data from a data source. The object will be tasked with building a key value pair that will make up translations. Interface provided for non-standard data sources.
+Describes an object that is responsible for interpreting data from a data source. The object will be tasked with building a key value pair collection that will make up translations. Interface provided for non-standard data sources.
 
 ##### TranslationDataProvider
 This property holds an object that reads the translation data source and formulates the collection of key value pairs that make up translations.
