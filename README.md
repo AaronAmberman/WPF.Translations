@@ -37,7 +37,14 @@ The translation object while being a DynamicObject does not allow for additional
 
 ###### Warning
 Make sure you type your key names correctly or this will generate an exception at runtime. 
-![image](https://user-images.githubusercontent.com/23512394/219955646-f16a7432-bdcd-444e-a2df-0856abfc6fa7.png)
+`
+System.Windows.Data Warning: 17 : Cannot get 'Units' value (type 'Object') from 'Translations' (type 'Translation'). BindingExpression:Path=Translations.Units; DataItem='MainWindowViewModel' (HashCode=31664161); target element is 'TabItem' (Name=''); target property is 'Header' (type 'Object') InvalidOperationException:'System.InvalidOperationException: Property path is not valid. 'System.Dynamic.DynamicObject+MetaDynamic' does not have a public property named 'Items'.
+   at CallSite.Target(Closure , CallSite , Object )
+   at System.Dynamic.UpdateDelegates.UpdateAndExecute1[T0,TRet](CallSite site, T0 arg0)
+   at MS.Internal.DynamicPropertyAccessorImpl.GetValue(Object component)
+   at MS.Internal.Data.PropertyPathWorker.GetValue(Object item, Int32 level)
+   at MS.Internal.Data.PropertyPathWorker.RawValue(Int32 k)'
+`
 XAML binding error to a property that doesn't exist.
 
 There is no auto-complete for member declarations because it is a dynamic object. Well, that is not entirely true.
