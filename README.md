@@ -76,7 +76,7 @@ Describes an object that is responsible for interpreting data from a data source
 This type allows translations to be read from a XAML ResourceDictionary.
 
 #### ResxResourceFileTranslationDataProvider
-This type allows translation to be read from RESX resource files.
+This type allows translations to be read from a RESX resource file.
 
 ## Usage
 Using the API to get translated strings is super simple.
