@@ -116,6 +116,3 @@ In the demo application I am using pack application strings because my ResourceD
 
 # Example
 If you want to see a real application example then check out my [VTOL VR Mission Assistant](https://github.com/AaronAmberman/VTOLVR-MissionAssistant).
-
-# Restrictions
-They are really any restrictions except don't name translations ***Count***, ***Keys*** or ***TranslationDataProvider*** because those are actual properties on the Translation type. That will cause a problem because obviously a type in .NET cannot have duplicate property names.
