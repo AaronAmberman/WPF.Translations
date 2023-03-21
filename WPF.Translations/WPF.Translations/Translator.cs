@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace WPF.Translations
 {
@@ -10,14 +11,33 @@ namespace WPF.Translations
     {
         #region Fields
 
-        private List<Tuple<string, T, Translation>> translations = new List<Tuple<string, T, Translation>>();
+        private bool disposedValue;
+        private List<Tuple<string, T, Translation>> translationCollection = new List<Tuple<string, T, Translation>>();
+        private dynamic currentTranslations;
+        private Translation keyContract;
+        private ITranslationDataProvider translationDataProvider;
+        private IReadOnlyDictionary<string, Translation> translations;
 
         #endregion
 
         #region Properties
 
         /// <summary>Gets or sets the translations currently in use.</summary>
-        public dynamic CurrentTranslations { get; set; }
+        public dynamic CurrentTranslations
+        {
+            get
+            {
+                VerifyDisposed();
+
+                return currentTranslations;
+            }
+            set
+            {
+                VerifyDisposed();
+
+                currentTranslations = value;
+            }
+        }
 
         /// <summary>Gets or sets the translation to use as the key enforcement contract.</summary>
         /// <remarks>
@@ -30,15 +50,57 @@ namespace WPF.Translations
         /// or an error will be thrown.
         /// </para>
         /// </remarks>
-        public Translation KeyContract { get; set; }
+        public Translation KeyContract
+        {
+            get
+            {
+                VerifyDisposed();
+
+                return keyContract;
+            }
+            set
+            {
+                VerifyDisposed();
+
+                keyContract = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the translation data provider (the component that will read the resource and construct a dictionary of translations).
         /// </summary>
-        public ITranslationDataProvider TranslationDataProvider { get; set; }
+        public ITranslationDataProvider TranslationDataProvider
+        {
+            get
+            {
+                VerifyDisposed();
+
+                return translationDataProvider;
+            }
+            set
+            {
+                VerifyDisposed();
+
+                translationDataProvider = value;
+            }
+        }
 
         /// <summary>Gets the collection of translations.</summary>
-        public IReadOnlyDictionary<string, Translation> Translations { get; private set; }
+        public IReadOnlyDictionary<string, Translation> Translations
+        {
+            get
+            {
+                VerifyDisposed();
+
+                return translations;
+            }
+            private set
+            {
+                VerifyDisposed();
+
+                translations = value;
+            }
+        }
 
         #endregion
 
@@ -67,6 +129,8 @@ namespace WPF.Translations
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: missing keys.</exception>
         public bool AddResourceForTranslation(string culture, T resource)
         {
+            VerifyDisposed();
+
             if (KeyContract == null)
                 throw new InvalidOperationException("The KeyContract must be set before adding any resource dictionaries.");
 
@@ -95,8 +159,8 @@ namespace WPF.Translations
                 dictionary.Add(culture, translation);
 
                 Translations = dictionary;
-                
-                translations.Add(new Tuple<string, T, Translation>(culture, resource, translation));
+
+                translationCollection.Add(new Tuple<string, T, Translation>(culture, resource, translation));
 
                 return true;
             }
@@ -118,35 +182,75 @@ namespace WPF.Translations
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: extra keys.</exception>
         public void AddResourcesForTranslation(IEnumerable<Tuple<string, T>> translations)
         {
+            VerifyDisposed();
+
             foreach (Tuple<string, T> translation in translations)
-            {
                 AddResourceForTranslation(translation.Item1, translation.Item2);
-            }
+        }
+
+        /// <summary>Adds a collection of resource dictionaries to the list of translations.</summary>
+        /// <param name="translations">The dictionary of translations to add.</param>
+        /// <exception cref="InvalidOperationException">The KeyContract must be set before adding any resource dictionaries.</exception>
+        /// <exception cref="ArgumentException">Duplicate key.</exception>
+        /// <exception cref="ArgumentNullException">resourceDictionary is null..</exception>
+        /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: key count mistmatch.</exception>
+        /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: missing keys.</exception>
+        /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: extra keys.</exception>
+        public void AddResourcesForTranslation(IDictionary<string, T> translations)
+        {
+            VerifyDisposed();
+
+            foreach (KeyValuePair<string, T> translation in translations)
+                AddResourceForTranslation(translation.Key, translation.Value);
         }
 
         /// <summary>Clears the current collection of translations.</summary>
         public void ClearTranslations()
         {
+            VerifyDisposed();
+
             CurrentTranslations = null;
             Translations = new Dictionary<string, Translation>();
-            translations.Clear();
+            translationCollection.Clear();
         }
 
-        /// <summary>Releases resources used by the Translation objects.</summary>
+        private void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    foreach (KeyValuePair<string, Translation> kvp in Translations)
+                    {
+                        kvp.Value.Dispose();
+                    }
+
+                    CurrentTranslations = null;
+                    Translations = null;
+
+                    translationCollection.Clear();
+                    translationCollection = null;
+
+                    TranslationDataProvider = null;
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        /// <summary>Releases resources used by the Translator object.</summary>
         public void Dispose()
         {
-            foreach (KeyValuePair<string, Translation> kvp in Translations)
-            {
-                kvp.Value.Dispose();
-            }
+            VerifyDisposed();
 
-            CurrentTranslations = null;
-            Translations = null;
-            
-            translations.Clear();
-            translations = null;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-            TranslationDataProvider = null;
+        private void VerifyDisposed([CallerMemberName] string caller = "")
+        {
+            if (disposedValue)
+                throw new ObjectDisposedException("WPF.Translations.Translator", $"{caller} cannot be accessed because the object instance has been disposed.");
         }
 
         #endregion

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
+using System.Runtime.CompilerServices;
 
 namespace WPF.Translations
 {
@@ -13,21 +14,47 @@ namespace WPF.Translations
     {
         #region Fields
 
+        private bool disposedValue;
         private object resources;
         private Dictionary<string, string> translations = new Dictionary<string, string>();
+        private readonly ITranslationDataProvider translationDataProvider;
 
         #endregion
 
         #region Properties
 
         /// <summary>Gets the number of translations.</summary>
-        public int Count => translations.Count;
+        public int Count
+        {
+            get
+            {
+                VerifyDisposed();
+
+                return translations.Count;
+            }
+        }
 
         /// <summary>Gets the collection of keys associated with this trnalsation object.</summary>
-        public Dictionary<string, string>.KeyCollection Keys => translations.Keys;
+        public Dictionary<string, string>.KeyCollection Keys
+        {
+            get
+            {
+                VerifyDisposed();
+
+                return translations.Keys;
+            }
+        }
 
         /// <summary>Gets the translations data provider.</summary>
-        public ITranslationDataProvider TranslationDataProvider { get; }
+        public ITranslationDataProvider TranslationDataProvider
+        {
+            get
+            {
+                VerifyDisposed();
+
+                return translationDataProvider;
+            }
+        }
 
         #endregion
 
@@ -54,7 +81,7 @@ namespace WPF.Translations
                 throw new ArgumentNullException(nameof(dataProvider));
 
             resources = translations;
-            TranslationDataProvider = dataProvider;
+            translationDataProvider = dataProvider;
 
             try
             {
@@ -70,17 +97,34 @@ namespace WPF.Translations
 
         #region Methods
 
+        private void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // not every data provider type will be disposable but if they are, Dispose of them
+                    // ResxResourceFileTranslationDataProvider needs it
+                    if (resources is IDisposable disposable)
+                    {
+                        disposable.Dispose();
+                    }
+
+                    translations.Clear();
+                    translations = null;
+                }
+
+                disposedValue = true;
+            }            
+        }
+
         /// <summary>Releases resources used by the Translation object.</summary>
         public void Dispose()
         {
-            // not every data provider type will be disposable but if they are, Dispose of them
-            if (resources is IDisposable disposable)
-            {
-                disposable.Dispose();
-            }
+            VerifyDisposed();
 
-            translations.Clear();
-            translations = null;
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>Attempts to get a property by key.</summary>
@@ -89,6 +133,8 @@ namespace WPF.Translations
         /// <exception cref="KeyNotFoundException">Occurs if the key is not found.</exception>
         public string GetTranslation(string key)
         {
+            VerifyDisposed();
+
             if (!translations.ContainsKey(key))
                 throw new KeyNotFoundException(key);
 
@@ -112,6 +158,8 @@ namespace WPF.Translations
         /// <returns>True if successfully retrieved otherwise false.</returns>
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
+            VerifyDisposed();
+
             bool success = translations.TryGetValue(binder.Name, out string temp);
 
             if (success)
@@ -134,6 +182,8 @@ namespace WPF.Translations
         /// <returns>True if found otherwise false.</returns>
         public bool TryGetValue(string key, out string value)
         {
+            VerifyDisposed();
+
             if (!translations.ContainsKey(key))
             {
                 value = string.Empty;
@@ -152,6 +202,8 @@ namespace WPF.Translations
         /// <returns>True if the value was set otherwise false.</returns>
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
+            VerifyDisposed();
+
             // we are not adding properties this way, our properties will be generated from Initialize
 
             if (!translations.ContainsKey(binder.Name))
@@ -165,6 +217,12 @@ namespace WPF.Translations
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(binder.Name));
 
             return true;
+        }
+
+        private void VerifyDisposed([CallerMemberName] string caller = "")
+        {
+            if (disposedValue)
+                throw new ObjectDisposedException("WPF.Translations.Translation", $"{caller} cannot be accessed because the object instance has been disposed.");
         }
 
         #endregion
