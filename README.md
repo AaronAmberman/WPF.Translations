@@ -64,6 +64,9 @@ Here I am binding to a Translation object and looking for a property called **Wi
 MessageBox.Show(Translations.WindowTitle);
 `
 
+### Eager Loading vs. Lazy Loading
+You can load all your translations right away or you can have them loaded on first access.
+
 #### IDisposable
 The Translator and Translation objects both implement IDisposable so be sure to clean up your resources.
 
