@@ -86,6 +86,9 @@ Hopefully this makes some other developer's life easier as it has made mine easi
 
 Translatable strings that can be bound in XAML or used in C# without the need to restart the application? Yes please! Enjoy!
 
+## Your Way
+Pro tip: the Translator object is built as a convenience class. You are not required to use it as the secret sauce here is the fact that the Translation object is a DynamicObject. Just use the Translation object directly however you'd like. This way you have complete control over how Translation objects are managed.
+
 ## One Final Note
 In the demo application I am using pack application strings because my ResourceDictionaries are set to "Resource" under properties.
 
