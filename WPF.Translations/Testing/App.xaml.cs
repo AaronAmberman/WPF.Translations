@@ -32,7 +32,7 @@ namespace Testing
             Translation keyContract = new Translation(new ResourceDictionary
             {
                 Source = new Uri("pack://application:,,,/Languages/Language.en.xaml")
-            }, rdtdp);
+            }, rdtdp, false);
 
             // setup the translator itself
             Translator<ResourceDictionary> translator = new Translator<ResourceDictionary>
@@ -66,7 +66,7 @@ namespace Testing
                     {
                         Source = new Uri("pack://application:,,,/Languages/Language.zh-Hans.xaml")
                     }),
-                });
+                }, true); // this is a small application so loading the translations on add is preferred (for larger applications (more strings) it won't be)
             }
             catch (Exception ex)
             {

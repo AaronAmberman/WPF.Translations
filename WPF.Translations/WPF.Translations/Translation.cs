@@ -15,6 +15,7 @@ namespace WPF.Translations
         #region Fields
 
         private bool disposedValue;
+        private bool hasBeenInitialized;
         private object resources;
         private Dictionary<string, string> translations = new Dictionary<string, string>();
         private readonly ITranslationDataProvider translationDataProvider;
@@ -70,9 +71,10 @@ namespace WPF.Translations
         /// <summary>Initializes a new instance of the <see cref="Translation"/> class.</summary>
         /// <param name="translations">The resource dictionary that contains our translations.</param>
         /// <param name="dataProvider">The translations data provider (where it pulls translation strings from).</param>
+        /// <param name="loadOnAdd">True immediately reads the translation file. False makes it so that it is read on first access.</param>
         /// <exception cref="ArgumentNullException">Occurs if either parameter is null.</exception>
         /// <exception cref="TypeInitializationException">Occurs if an exceptions is thrown attempting to read the resource dictionary.</exception>
-        public Translation(object translations, ITranslationDataProvider dataProvider)
+        public Translation(object translations, ITranslationDataProvider dataProvider, bool loadOnAdd)
         {
             if (translations == null)
                 throw new ArgumentNullException(nameof(translations));
@@ -85,7 +87,8 @@ namespace WPF.Translations
 
             try
             {
-                Initialize();
+                if (loadOnAdd)
+                    Initialize();
             }
             catch (Exception ex)
             {
@@ -150,6 +153,8 @@ namespace WPF.Translations
             {
                 translations[key] = resourceTranslations[key].ToString();
             }
+
+            hasBeenInitialized = true;
         }
 
         /// <summary>Attempts to get a property.</summary>
@@ -159,6 +164,8 @@ namespace WPF.Translations
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             VerifyDisposed();
+
+            if (!hasBeenInitialized) Initialize();
 
             bool success = translations.TryGetValue(binder.Name, out string temp);
 
@@ -184,6 +191,8 @@ namespace WPF.Translations
         {
             VerifyDisposed();
 
+            if (!hasBeenInitialized) Initialize();
+
             if (!translations.ContainsKey(key))
             {
                 value = string.Empty;
@@ -203,6 +212,8 @@ namespace WPF.Translations
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
             VerifyDisposed();
+
+            if (!hasBeenInitialized) Initialize();
 
             // we are not adding properties this way, our properties will be generated from Initialize
 

@@ -122,12 +122,13 @@ namespace WPF.Translations
         /// <summary>Adds a resource dictionary to the list of translations.</summary>
         /// <param name="culture">The culture string to use as a key for the translation.</param>
         /// <param name="resource">The resource dictionary to add that contains our translated strings.</param>
+        /// <param name="loadTranslation">True immediately reads the translation file. False makes it so that it is read on first access.</param>
         /// <exception cref="InvalidOperationException">The KeyContract must be set before adding any resource dictionaries.</exception>
         /// <exception cref="ArgumentException">Duplicate key.</exception>
         /// <exception cref="ArgumentNullException">resourceDictionary is null..</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: key count mistmatch.</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: missing keys.</exception>
-        public bool AddResourceForTranslation(string culture, T resource)
+        public bool AddResourceForTranslation(string culture, T resource, bool loadTranslation)
         {
             VerifyDisposed();
 
@@ -142,7 +143,7 @@ namespace WPF.Translations
 
             try
             {
-                Translation translation = new Translation(resource, TranslationDataProvider);
+                Translation translation = new Translation(resource, TranslationDataProvider, loadTranslation);
 
                 if (translation.Count != KeyContract.Count)
                     throw new ArgumentException($"ResourceDictionary does not match KeyContract: key count mistmatch. Culture: {culture}.");
@@ -174,34 +175,36 @@ namespace WPF.Translations
 
         /// <summary>Adds a collection of resource dictionaries to the list of translations.</summary>
         /// <param name="translations">The collections of translations to add.</param>
+        /// <param name="loadTranslation">True immediately reads the translation file. False makes it so that it is read on first access.</param>
         /// <exception cref="InvalidOperationException">The KeyContract must be set before adding any resource dictionaries.</exception>
         /// <exception cref="ArgumentException">Duplicate key.</exception>
         /// <exception cref="ArgumentNullException">resourceDictionary is null..</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: key count mistmatch.</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: missing keys.</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: extra keys.</exception>
-        public void AddResourcesForTranslation(IEnumerable<Tuple<string, T>> translations)
+        public void AddResourcesForTranslation(IEnumerable<Tuple<string, T>> translations, bool loadTranslation)
         {
             VerifyDisposed();
 
             foreach (Tuple<string, T> translation in translations)
-                AddResourceForTranslation(translation.Item1, translation.Item2);
+                AddResourceForTranslation(translation.Item1, translation.Item2, loadTranslation);
         }
 
         /// <summary>Adds a collection of resource dictionaries to the list of translations.</summary>
         /// <param name="translations">The dictionary of translations to add.</param>
+        /// <param name="loadTranslation">True immediately reads the translation file. False makes it so that it is read on first access.</param>
         /// <exception cref="InvalidOperationException">The KeyContract must be set before adding any resource dictionaries.</exception>
         /// <exception cref="ArgumentException">Duplicate key.</exception>
         /// <exception cref="ArgumentNullException">resourceDictionary is null..</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: key count mistmatch.</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: missing keys.</exception>
         /// <exception cref="ArgumentException">ResourceDictionary does not match KeyContract: extra keys.</exception>
-        public void AddResourcesForTranslation(IDictionary<string, T> translations)
+        public void AddResourcesForTranslation(IDictionary<string, T> translations, bool loadTranslation)
         {
             VerifyDisposed();
 
             foreach (KeyValuePair<string, T> translation in translations)
-                AddResourceForTranslation(translation.Key, translation.Value);
+                AddResourceForTranslation(translation.Key, translation.Value, loadTranslation);
         }
 
         /// <summary>Clears the current collection of translations.</summary>
