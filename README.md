@@ -94,3 +94,5 @@ In the demo application I am using pack application strings because my ResourceD
 
 # Example
 If you want to see a real application example then check out my [VTOL VR Mission Assistant](https://github.com/AaronAmberman/VTOLVR-MissionAssistant).
+
+My [LTT-WPF-Application](https://github.com/AaronAmberman/LTT-WPF-Application) template uses this API but does not use the Translator. Instead it uses the Translation object directly to manage translations. Check it out for a different strategy for managing a Translation directly instead of using the Translator.
